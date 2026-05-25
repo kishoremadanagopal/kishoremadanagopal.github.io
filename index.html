@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kishore Madanagopal — AI Engineer</title>
+  <meta name="description" content="AI Engineer specializing in RLHF, LLM Fine-Tuning, and production reinforcement learning systems. Supporting Amazon AI research at Keywords Studios."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:      #0a0010;
+      --bg2:     #0f0018;
+      --bg3:     #130020;
+      --surface: rgba(255,255,255,0.032);
+      --border:  rgba(192,132,252,0.13);
+      --border2: rgba(232,121,249,0.3);
+      --purple:  #c084fc;
+      --fuchsia: #e879f9;
+      --violet:  #a855f7;
+      --pink:    #f0abfc;
+      --soft:    #f5e9ff;
+      --muted:   #b39dcc;
+      --dim:     #6b4f8a;
+      --text:    #f5e9ff;
+      --green:   #4ade80;
+      --blue:    #60a5fa;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;font-weight:300;line-height:1.75;overflow-x:hidden}
+
+    /* STARS */
+    #stars{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+    .star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--d,3s) ease-in-out infinite alternate;opacity:0}
+    @keyframes twinkle{from{opacity:0}to{opacity:var(--o,.5)}}
+
+    /* AURORA */
+    .aurora{position:fixed;inset:0;z-index:0;pointer-events:none}
+    .aurora::before{content:'';position:absolute;top:-20%;left:-10%;width:70vw;height:70vw;background:radial-gradient(ellipse,rgba(168,85,247,.16) 0%,transparent 65%);animation:drift1 20s ease-in-out infinite alternate}
+    .aurora::after{content:'';position:absolute;bottom:-20%;right:-10%;width:55vw;height:55vw;background:radial-gradient(ellipse,rgba(232,121,249,.1) 0%,transparent 65%);animation:drift2 25s ease-in-out infinite alternate}
+    @keyframes drift1{from{transform:translate(0,0) scale(1)}to{transform:translate(6vw,8vh) scale(1.12)}}
+    @keyframes drift2{from{transform:translate(0,0) scale(1)}to{transform:translate(-5vw,-6vh) scale(1.08)}}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 5rem;background:rgba(10,0,16,.8);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+    .nav-logo{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:900;background:linear-gradient(135deg,var(--purple),var(--fuchsia));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none}
+    .nav-links{display:flex;gap:2.2rem;list-style:none}
+    .nav-links a{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--muted);text-decoration:none;letter-spacing:.1em;text-transform:uppercase;transition:color .2s}
+    .nav-links a:hover{color:var(--purple)}
+    .nav-badge{font-family:'JetBrains Mono',monospace;font-size:.65rem;padding:.25rem .7rem;border-radius:2px;border:1px solid rgba(74,222,128,.3);color:var(--green);background:rgba(74,222,128,.07);letter-spacing:.06em;animation:pulse 2s ease-in-out infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+
+    /* HERO */
+    .hero{position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;padding:9rem 5rem 5rem}
+    .hero-inner{max-width:1100px;margin:0 auto;width:100%}
+    .hero-eyebrow{display:inline-flex;align-items:center;gap:.7rem;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--purple);letter-spacing:.14em;text-transform:uppercase;margin-bottom:1.8rem;opacity:0;animation:riseIn .7s ease .2s forwards}
+    .hero-eyebrow::before{content:'';display:inline-block;width:28px;height:1px;background:var(--purple)}
+    .hero-name{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(4rem,9vw,8rem);line-height:.92;letter-spacing:-.03em;margin-bottom:1.8rem;opacity:0;animation:riseIn .8s ease .4s forwards}
+    .hero-name .first{display:block;color:var(--soft)}
+    .hero-name .last{display:block;background:linear-gradient(120deg,var(--violet),var(--fuchsia) 55%,var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero-desc{max-width:560px;font-size:1.05rem;color:var(--muted);margin-bottom:2.8rem;opacity:0;animation:riseIn .8s ease .6s forwards}
+    .hero-desc strong{color:var(--soft);font-weight:500}
+    .hero-btns{display:flex;gap:1rem;flex-wrap:wrap;opacity:0;animation:riseIn .8s ease .8s forwards}
+    .btn-main{font-family:'JetBrains Mono',monospace;font-size:.76rem;letter-spacing:.06em;text-transform:uppercase;padding:.9rem 2rem;border-radius:2px;text-decoration:none;background:linear-gradient(135deg,var(--violet),var(--fuchsia));color:#fff;font-weight:500;transition:all .25s}
+    .btn-main:hover{opacity:.88;transform:translateY(-2px);box-shadow:0 10px 30px rgba(168,85,247,.4)}
+    .btn-ghost{font-family:'JetBrains Mono',monospace;font-size:.76rem;letter-spacing:.06em;text-transform:uppercase;padding:.9rem 2rem;border-radius:2px;text-decoration:none;border:1px solid var(--border2);color:var(--muted);transition:all .25s}
+    .btn-ghost:hover{border-color:var(--purple);color:var(--purple);transform:translateY(-2px)}
+    .hero-stats{display:flex;gap:3.5rem;margin-top:5rem;padding-top:3rem;border-top:1px solid var(--border);opacity:0;animation:riseIn .8s ease 1s forwards;flex-wrap:wrap}
+    .stat-n{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:900;background:linear-gradient(135deg,var(--purple),var(--fuchsia));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+    .stat-l{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--dim);letter-spacing:.12em;text-transform:uppercase;margin-top:.3rem}
+
+    /* SECTIONS */
+    section{position:relative;z-index:1;padding:7rem 5rem}
+    .container{max-width:1100px;margin:0 auto}
+    .s-label{font-family:'JetBrains Mono',monospace;font-size:.67rem;color:var(--fuchsia);letter-spacing:.2em;text-transform:uppercase;margin-bottom:.7rem;display:flex;align-items:center;gap:.7rem}
+    .s-label::after{content:'';flex:1;max-width:50px;height:1px;background:var(--fuchsia);opacity:.4}
+    .s-title{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(2rem,4.5vw,3rem);letter-spacing:-.02em;margin-bottom:3.5rem;color:var(--soft)}
+
+    /* ABOUT */
+    #about{background:var(--bg2)}
+    .about-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:5rem;align-items:start}
+    .about-text p{color:var(--muted);font-size:1rem;margin-bottom:1.2rem}
+    .about-text strong{color:var(--soft);font-weight:500}
+    .badge-row{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1.8rem}
+    .badge{font-family:'JetBrains Mono',monospace;font-size:.65rem;padding:.25rem .65rem;border-radius:2px;border:1px solid var(--border);color:var(--muted);letter-spacing:.04em}
+    .badge.hi{border-color:rgba(232,121,249,.3);color:var(--fuchsia);background:rgba(232,121,249,.06)}
+    .info-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;overflow:hidden}
+    .info-row{display:flex;align-items:flex-start;gap:.9rem;padding:.9rem 1.2rem;border-bottom:1px solid var(--border)}
+    .info-row:last-child{border-bottom:none}
+    .info-icon{font-size:.95rem;flex-shrink:0;margin-top:.15rem}
+    .info-lbl{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--dim);text-transform:uppercase;letter-spacing:.1em}
+    .info-val{font-size:.86rem;color:var(--soft);margin-top:.12rem}
+    .info-val a{color:var(--purple);text-decoration:none}
+    .info-val a:hover{color:var(--fuchsia)}
+
+    /* SKILLS */
+    #skills{background:var(--bg3)}
+    .skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem}
+    .sk-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:1.6rem;transition:all .3s;position:relative;overflow:hidden}
+    .sk-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--violet),var(--fuchsia));transform:scaleX(0);transform-origin:left;transition:transform .35s ease}
+    .sk-card:hover::after{transform:scaleX(1)}
+    .sk-card:hover{border-color:var(--border2);transform:translateY(-4px)}
+    .sk-title{font-family:'Outfit',sans-serif;font-weight:600;font-size:.84rem;color:var(--soft);margin-bottom:.9rem}
+    .pills{display:flex;flex-wrap:wrap;gap:.38rem}
+    .pill{font-family:'JetBrains Mono',monospace;font-size:.62rem;padding:.18rem .52rem;border-radius:2px;background:rgba(168,85,247,.07);border:1px solid rgba(168,85,247,.18);color:var(--muted)}
+    .pill.hot{background:rgba(232,121,249,.1);border-color:rgba(232,121,249,.25);color:var(--pink)}
+
+    /* EXPERIENCE */
+    #experience{background:var(--bg2)}
+    .timeline{padding-left:1.5rem;border-left:1px solid var(--border)}
+    .tl-item{position:relative;padding-left:2.2rem;margin-bottom:3.8rem}
+    .tl-item:last-child{margin-bottom:0}
+    .tl-dot{position:absolute;left:-2.15rem;top:.4rem;width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--fuchsia));box-shadow:0 0 14px rgba(232,121,249,.5)}
+    .tl-date{font-family:'JetBrains Mono',monospace;font-size:.66rem;color:var(--fuchsia);letter-spacing:.1em;margin-bottom:.35rem}
+    .tl-header{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:.2rem}
+    .tl-company{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--soft)}
+    .tl-location{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--dim);padding:.2rem .55rem;border:1px solid var(--border);border-radius:2px}
+    .tl-role{font-size:.88rem;color:var(--muted);margin-bottom:1rem}
+    .tl-bullets{list-style:none;display:flex;flex-direction:column;gap:.45rem}
+    .tl-bullets li{font-size:.86rem;color:var(--muted);padding-left:1.3rem;position:relative;line-height:1.6}
+    .tl-bullets li::before{content:'✦';position:absolute;left:0;color:var(--violet);font-size:.58rem;top:.25rem}
+    .tl-bullets li strong{color:var(--soft);font-weight:500}
+    .tl-skills{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.9rem}
+
+    /* PROJECTS */
+    #projects{background:var(--bg3)}
+    .proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.1rem}
+    .proj-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:1.8rem;transition:all .3s;display:flex;flex-direction:column;position:relative;overflow:hidden}
+    .proj-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--fuchsia),transparent);opacity:0;transition:opacity .3s}
+    .proj-card:hover::before{opacity:1}
+    .proj-card:hover{border-color:var(--border2);transform:translateY(-4px);box-shadow:0 20px 50px rgba(168,85,247,.1)}
+    .proj-card.featured{border-color:rgba(232,121,249,.22)}
+    .proj-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.9rem}
+    .proj-emoji{font-size:1.5rem}
+    .proj-links{display:flex;gap:.4rem;flex-wrap:wrap}
+    .proj-link{font-family:'JetBrains Mono',monospace;font-size:.63rem;color:var(--dim);text-decoration:none;border:1px solid var(--border);padding:.18rem .55rem;border-radius:2px;transition:all .2s}
+    .proj-link:hover{color:var(--fuchsia);border-color:var(--fuchsia)}
+    .proj-badge{font-family:'JetBrains Mono',monospace;font-size:.6rem;padding:.15rem .5rem;border-radius:2px;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.25);color:var(--green)}
+    .proj-title{font-family:'Playfair Display',serif;font-weight:700;font-size:1rem;color:var(--soft);margin-bottom:.5rem}
+    .proj-desc{font-size:.84rem;color:var(--muted);flex:1;margin-bottom:1.1rem;line-height:1.65}
+    .proj-metrics{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem}
+    .metric{font-family:'JetBrains Mono',monospace;font-size:.62rem;padding:.18rem .55rem;border-radius:2px;background:rgba(192,132,252,.08);border:1px solid rgba(192,132,252,.2);color:var(--purple)}
+
+    /* CERTS */
+    #certifications{background:var(--bg2)}
+    .certs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+    .cert-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:1.4rem;transition:all .3s;display:flex;flex-direction:column;gap:.5rem}
+    .cert-card:hover{border-color:var(--border2);transform:translateY(-3px)}
+    .cert-issuer{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--fuchsia);letter-spacing:.08em;text-transform:uppercase}
+    .cert-name{font-size:.88rem;color:var(--soft);font-weight:500;line-height:1.4}
+    .cert-date{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--dim)}
+    .cert-link{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--purple);text-decoration:none;margin-top:auto;transition:color .2s}
+    .cert-link:hover{color:var(--fuchsia)}
+
+    /* PUBLICATIONS */
+    #publications{background:var(--bg3)}
+    .pub-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:2rem;margin-bottom:1rem;transition:all .3s;display:flex;gap:2rem;align-items:flex-start}
+    .pub-card:hover{border-color:var(--border2);transform:translateY(-2px)}
+    .pub-year{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:var(--dim);flex-shrink:0;line-height:1;padding-top:.2rem}
+    .pub-venue{font-family:'JetBrains Mono',monospace;font-size:.63rem;color:var(--fuchsia);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.4rem}
+    .pub-title{font-family:'Playfair Display',serif;font-weight:700;font-size:1.05rem;color:var(--soft);margin-bottom:.5rem;line-height:1.3}
+    .pub-authors{font-size:.82rem;color:var(--muted);margin-bottom:.8rem}
+    .pub-authors strong{color:var(--purple);font-weight:500}
+    .pub-abstract{font-size:.82rem;color:var(--dim);line-height:1.65;margin-bottom:1rem}
+    .pub-meta{display:flex;gap:.5rem;flex-wrap:wrap}
+    .pub-stat{font-family:'JetBrains Mono',monospace;font-size:.6rem;padding:.18rem .55rem;border-radius:2px;background:rgba(96,165,250,.07);border:1px solid rgba(96,165,250,.2);color:var(--blue)}
+
+    /* EDUCATION */
+    #education{background:var(--bg2)}
+    .edu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.1rem}
+    .edu-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:2rem;transition:all .3s}
+    .edu-card:hover{border-color:var(--border2);transform:translateY(-3px)}
+    .edu-deg{font-family:'Playfair Display',serif;font-weight:700;font-size:1rem;color:var(--soft);margin-bottom:.3rem}
+    .edu-school{font-size:.86rem;color:var(--muted);margin-bottom:.2rem}
+    .edu-period{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--dim);margin-bottom:1rem}
+    .edu-body{font-size:.82rem;color:var(--dim);line-height:1.65}
+    .edu-badges{display:flex;gap:.5rem;margin-top:1.2rem;flex-wrap:wrap}
+    .edu-b{font-family:'JetBrains Mono',monospace;font-size:.63rem;padding:.22rem .6rem;border-radius:2px}
+    .edu-b.gpa{background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.28);color:var(--purple)}
+    .edu-b.yr{background:rgba(232,121,249,.07);border:1px solid rgba(232,121,249,.22);color:var(--fuchsia)}
+    .edu-b.award{background:rgba(74,222,128,.07);border:1px solid rgba(74,222,128,.22);color:var(--green)}
+
+    /* LEADERSHIP */
+    #leadership{background:var(--bg3)}
+    .lead-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+    .lead-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:1.4rem;transition:all .3s}
+    .lead-card:hover{border-color:var(--border2);transform:translateY(-3px)}
+    .lead-icon{font-size:1.3rem;margin-bottom:.6rem}
+    .lead-title{font-size:.88rem;font-weight:600;color:var(--soft);margin-bottom:.2rem}
+    .lead-org{font-family:'JetBrains Mono',monospace;font-size:.63rem;color:var(--purple);margin-bottom:.4rem}
+    .lead-period{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--dim);margin-bottom:.6rem}
+    .lead-desc{font-size:.8rem;color:var(--muted);line-height:1.55}
+
+    /* CONTACT */
+    #contact{background:var(--bg2);text-align:center}
+    .contact-wrap{max-width:620px;margin:0 auto}
+    .contact-sub{color:var(--muted);font-size:1rem;margin-bottom:2.5rem;line-height:1.7}
+    .email-link{display:block;font-family:'Playfair Display',serif;font-size:clamp(1.1rem,2.8vw,1.7rem);font-weight:700;color:var(--soft);text-decoration:none;margin-bottom:2.5rem;transition:color .2s}
+    .email-link:hover{color:var(--fuchsia)}
+    .socials{display:flex;justify-content:center;gap:.9rem;flex-wrap:wrap}
+    .soc-link{display:inline-flex;align-items:center;gap:.5rem;font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.06em;color:var(--muted);text-decoration:none;border:1px solid var(--border);padding:.72rem 1.3rem;border-radius:2px;transition:all .22s}
+    .soc-link:hover{color:var(--fuchsia);border-color:var(--fuchsia);background:rgba(232,121,249,.05);transform:translateY(-2px)}
+
+    /* FOOTER */
+    footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:2rem 5rem;display:flex;justify-content:space-between;align-items:center}
+    footer p{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--dim);letter-spacing:.06em}
+
+    /* REVEAL */
+    .reveal{opacity:0;transform:translateY(26px);transition:opacity .6s ease,transform .6s ease}
+    .reveal.in{opacity:1;transform:translateY(0)}
+
+    /* ANIMATIONS */
+    @keyframes riseIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+
+    /* DIVIDER */
+    .divider{height:1px;background:linear-gradient(90deg,transparent,var(--border2),transparent);margin:0 5rem}
+
+    /* RESPONSIVE */
+    @media(max-width:960px){
+      nav{padding:1.1rem 1.5rem}
+      .nav-links{gap:1.3rem}
+      section{padding:4.5rem 1.5rem}
+      .hero{padding:8rem 1.5rem 3.5rem}
+      .about-grid{grid-template-columns:1fr;gap:2.5rem}
+      .skills-grid,.certs-grid,.lead-grid{grid-template-columns:repeat(2,1fr)}
+      .proj-grid,.edu-grid{grid-template-columns:1fr}
+      .hero-stats{gap:2rem}
+      .pub-card{flex-direction:column;gap:1rem}
+      .pub-year{font-size:1.4rem}
+      footer{padding:1.5rem;flex-direction:column;gap:.5rem;text-align:center}
+      .divider{margin:0 1.5rem}
+    }
+    @media(max-width:600px){
+      .skills-grid,.certs-grid,.lead-grid{grid-template-columns:1fr}
+      .nav-links{display:none}
+      .hero-name{font-size:clamp(3rem,13vw,5rem)}
+    }
+  </style>
+</head>
+<body>
+
+<div id="stars"></div>
+<div class="aurora"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">KM</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="#publications">Research</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <span class="nav-badge">● Open to Work</span>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">AI Engineer · San Jose, CA</div>
+    <h1 class="hero-name">
+      <span class="first">Kishore</span>
+      <span class="last">Madanagopal</span>
+    </h1>
+    <p class="hero-desc">
+      Building <strong>production-grade AI systems</strong> — RLHF pipelines, LLM fine-tuning &amp; agentic AI at scale.
+      Currently supporting <strong>Amazon AI research</strong> at Keywords Studios.
+      Open to AI Engineer, ML Engineer, RL Engineer &amp; Applied Science roles.
+    </p>
+    <div class="hero-btns">
+      <a href="mailto:kishoremadanagopal@gmail.com" class="btn-main">Get in touch →</a>
+      <a href="https://linkedin.com/in/kishoremadanagopal" target="_blank" class="btn-ghost">LinkedIn ↗</a>
+      <a href="https://github.com/kishorenaidu" target="_blank" class="btn-ghost">GitHub ↗</a>
+      <a href="https://scholar.google.com/citations?user=w5tvejIAAAAJ&hl=en" target="_blank" class="btn-ghost">Scholar ↗</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-n">3+</div><div class="stat-l">Years in AI/ML</div></div>
+      <div><div class="stat-n">4.0</div><div class="stat-l">MS GPA @ OSU</div></div>
+      <div><div class="stat-n">9</div><div class="stat-l">IEEE Citations</div></div>
+      <div><div class="stat-n">11</div><div class="stat-l">Certifications</div></div>
+      <div><div class="stat-n">8+</div><div class="stat-l">Projects Shipped</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="s-label">01 / About</div>
+    <h2 class="s-title">Who I Am</h2>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>I'm an <strong>AI Engineer</strong> working at the frontier of reinforcement learning and large language model alignment. My day-to-day involves executing production RLHF pipelines, reward modeling, and Chain-of-Thought optimization for LLM agents — supporting <strong>Amazon's AI research</strong> at Keywords Studios.</p>
+        <p>My approach bridges deep technical execution with cross-functional collaboration. I've translated ambiguous enterprise AI challenges into structured solution architectures across three professional roles, from enterprise integrations at <strong>Tata Consultancy Services</strong> to cloud infrastructure at <strong>InterWorks</strong> to production ML at <strong>Keywords Studios</strong>.</p>
+        <p>I hold an <strong>MS in Management Information Systems (4.0 GPA)</strong> from Oklahoma State University — where I was recognized as an Outstanding Graduate Student — and a BTech in Computer Science from SRM Institute. My IEEE-published research on IoT has been cited 9 times.</p>
+        <p>I'm open to full-time roles in <strong>AI Engineering, ML Engineering, RL Engineering, Applied Science, and LLM Engineering</strong> — remote, hybrid, or onsite.</p>
+        <div class="badge-row">
+          <span class="badge hi">RLHF</span>
+          <span class="badge hi">LLM Fine-Tuning</span>
+          <span class="badge hi">Reinforcement Learning</span>
+          <span class="badge hi">Agentic AI</span>
+          <span class="badge hi">RAG Pipelines</span>
+          <span class="badge">Chain-of-Thought</span>
+          <span class="badge">Reward Modeling</span>
+          <span class="badge">PyTorch</span>
+          <span class="badge">AWS</span>
+          <span class="badge">IEEE Published</span>
+        </div>
+      </div>
+      <div class="info-card reveal">
+        <div class="info-row">
+          <div class="info-icon">📍</div>
+          <div><div class="info-lbl">Location</div><div class="info-val">San Jose, California, USA</div></div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon">💼</div>
+          <div><div class="info-lbl">Current Role</div><div class="info-val">Technical Research Associate 3 · Keywords Studios</div></div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon">🔬</div>
+          <div><div class="info-lbl">Supporting</div><div class="info-val">Amazon AI Research</div></div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon">🎓</div>
+          <div><div class="info-lbl">Education</div><div class="info-val">MS MIS · Oklahoma State University (4.0 GPA)</div></div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon">📧</div>
+          <div><div class="info-lbl">Email</div><div class="info-val"><a href="mailto:kishoremadanagopal@gmail.com">kishoremadanagopal@gmail.com</a></div></div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon">📞</div>
+          <div><div class="info-lbl">Phone</div><div class="info-val">(405) 269-1729</div></div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon">✅</div>
+          <div><div class="info-lbl">Work Authorization</div><div class="info-val">Authorized to work in the United States</div></div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon">🌐</div>
+          <div><div class="info-lbl">Languages</div><div class="info-val">English (Professional) · Hindi (Professional) · Tamil · Telugu</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="s-label">02 / Skills</div>
+    <h2 class="s-title">Technical Stack</h2>
+    <div class="skills-grid">
+      <div class="sk-card reveal">
+        <div class="sk-title">🤖 Core AI / RL</div>
+        <div class="pills">
+          <span class="pill hot">Reinforcement Learning</span>
+          <span class="pill hot">RLHF</span>
+          <span class="pill hot">LLM Fine-Tuning (CFT/AFT)</span>
+          <span class="pill hot">Reward Modeling</span>
+          <span class="pill hot">RRR Framework</span>
+          <span class="pill hot">Chain-of-Thought Reasoning</span>
+          <span class="pill hot">Agentic AI</span>
+          <span class="pill hot">Prompt Engineering</span>
+          <span class="pill">LLM Evaluation</span>
+          <span class="pill">Model Benchmarking</span>
+          <span class="pill">Human-in-the-Loop ML</span>
+        </div>
+      </div>
+      <div class="sk-card reveal">
+        <div class="sk-title">🛠 Frameworks &amp; Libraries</div>
+        <div class="pills">
+          <span class="pill hot">PyTorch</span>
+          <span class="pill hot">HuggingFace Transformers</span>
+          <span class="pill hot">LangChain</span>
+          <span class="pill hot">FAISS</span>
+          <span class="pill hot">Chroma</span>
+          <span class="pill">TensorFlow</span>
+          <span class="pill">Scikit-learn</span>
+          <span class="pill">Pandas &amp; NumPy</span>
+          <span class="pill">n8n</span>
+          <span class="pill">Playwright</span>
+          <span class="pill">Alteryx</span>
+        </div>
+      </div>
+      <div class="sk-card reveal">
+        <div class="sk-title">💻 Languages</div>
+        <div class="pills">
+          <span class="pill hot">Python</span>
+          <span class="pill">TypeScript</span>
+          <span class="pill">JavaScript</span>
+          <span class="pill">SQL</span>
+          <span class="pill">Bash</span>
+          <span class="pill">PowerShell</span>
+          <span class="pill">PHP</span>
+          <span class="pill">C/C++</span>
+          <span class="pill">HTML5 / CSS</span>
+        </div>
+      </div>
+      <div class="sk-card reveal">
+        <div class="sk-title">☁️ Cloud &amp; DevOps</div>
+        <div class="pills">
+          <span class="pill hot">AWS (EC2, S3, Lambda, Bedrock)</span>
+          <span class="pill hot">Azure</span>
+          <span class="pill">Docker</span>
+          <span class="pill">Git / GitHub</span>
+          <span class="pill">CI/CD</span>
+          <span class="pill">VMware</span>
+          <span class="pill">REST APIs</span>
+          <span class="pill">Linux / Ubuntu</span>
+        </div>
+      </div>
+      <div class="sk-card reveal">
+        <div class="sk-title">📊 Data &amp; Analytics</div>
+        <div class="pills">
+          <span class="pill">MS SQL Server</span>
+          <span class="pill">MongoDB</span>
+          <span class="pill">Tableau</span>
+          <span class="pill">KNIME</span>
+          <span class="pill">SAS Viya</span>
+          <span class="pill">Data Visualization</span>
+          <span class="pill">Predictive Analytics</span>
+          <span class="pill">Wireshark</span>
+          <span class="pill">Log Analysis</span>
+        </div>
+      </div>
+      <div class="sk-card reveal">
+        <div class="sk-title">⚙️ Enterprise &amp; Security</div>
+        <div class="pills">
+          <span class="pill">Workday Studio</span>
+          <span class="pill">Workday Integration</span>
+          <span class="pill">SSO / SAML</span>
+          <span class="pill">Active Directory</span>
+          <span class="pill">Agile / Jira</span>
+          <span class="pill">DNS / DHCP</span>
+          <span class="pill">Cybersecurity</span>
+          <span class="pill">IoT</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="s-label">03 / Experience</div>
+    <h2 class="s-title">Where I've Worked</h2>
+    <div class="timeline">
+
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-date">Oct 2025 – Present · 8 months</div>
+        <div class="tl-header">
+          <div class="tl-company">Keywords Studios</div>
+          <span class="tl-location">San Jose, CA · On-site</span>
+        </div>
+        <div class="tl-role">Technical Research Associate 3 — Supporting Amazon AI Research</div>
+        <ul class="tl-bullets">
+          <li>Execute the full <strong>reinforcement learning training pipeline</strong>: pre-training → CFT → AFT using the RRR (Reward, Reasoning, Refinement) framework → human-in-the-loop evaluation → CoT reasoning optimization.</li>
+          <li>Implement <strong>RLHF workflows</strong> including reward signal design, reward distribution modeling, and iterative refinement of agent behavior through structured human preference feedback.</li>
+          <li>Coordinate <strong>human-in-the-loop evaluation</strong> — team members perform structured manual scoring of model outputs against quality rubrics, generating preference signals that drive reward modeling and alignment improvement.</li>
+          <li>Design and evaluate <strong>Chain-of-Thought reasoning traces</strong> by scoring step-level accuracy, identifying reasoning failure patterns, and iterating on CoT prompting strategies to improve model depth and consistency.</li>
+          <li>Build and maintain <strong>production-quality Python pipelines</strong> for data mining, preprocessing, model evaluation, and training automation.</li>
+          <li>Collaborate cross-functionally with AI researchers and engineers in a fast-paced enterprise AI research environment.</li>
+        </ul>
+        <div class="tl-skills">
+          <span class="pill hot">RLHF</span><span class="pill hot">Reinforcement Learning</span><span class="pill hot">LLM Fine-Tuning</span><span class="pill hot">Reward Modeling</span><span class="pill">Chain-of-Thought</span><span class="pill">PyTorch</span><span class="pill">HuggingFace</span><span class="pill">Amazon Nova</span><span class="pill">Python</span>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-date">Jan 2024 – May 2025 · 10 months total</div>
+        <div class="tl-header">
+          <div class="tl-company">Oklahoma State University</div>
+          <span class="tl-location">Stillwater, OK · Hybrid</span>
+        </div>
+        <div class="tl-role">Graduate Research &amp; Teaching Assistant — Spears School of Business</div>
+        <ul class="tl-bullets">
+          <li>TA for <strong>Digital Forensics &amp; Incident Response</strong> (under Christopher Pogue) — Wireshark, log analysis, incident triage and forensic reporting.</li>
+          <li>TA for <strong>Programming for Data Science &amp; Analytics I</strong> (under Dr. Xiao Luo) — Python, Pandas, NumPy, data visualization curriculum delivery and student support.</li>
+          <li>Grader for <strong>Economics Department</strong> (under Dr. Eric Gonzalez Sanchez) — analytical reasoning and assessment.</li>
+        </ul>
+        <div class="tl-skills">
+          <span class="pill">Python</span><span class="pill">Pandas</span><span class="pill">Wireshark</span><span class="pill">Log Analysis</span><span class="pill">Data Visualization</span>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-date">May 2024 – Aug 2024 · 4 months</div>
+        <div class="tl-header">
+          <div class="tl-company">InterWorks</div>
+          <span class="tl-location">Stillwater, OK · On-site</span>
+        </div>
+        <div class="tl-role">IT Intern</div>
+        <ul class="tl-bullets">
+          <li>Automated cloud infrastructure operations using <strong>Python and PowerShell on AWS and Azure</strong>, achieving a 20% improvement in operational efficiency and 99.9% uptime across DNS, virtual machines, and cloud services.</li>
+          <li>Managed <strong>Tableau Cloud, Alteryx analytics pipelines, and Tableau Server</strong>, including SSO/SAML configuration, REST API data connections, and performance monitoring for business-critical reporting systems.</li>
+          <li>Conducted client discovery, deployed cloud tools, troubleshot complex integration issues, and documented technical solutions — building enterprise client partnership skills.</li>
+        </ul>
+        <div class="tl-skills">
+          <span class="pill">AWS</span><span class="pill">Azure</span><span class="pill">PowerShell</span><span class="pill">Tableau</span><span class="pill">Alteryx</span><span class="pill">SSO/SAML</span><span class="pill">REST APIs</span>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-date">Nov 2021 – Nov 2022 · 1 year 1 month</div>
+        <div class="tl-header">
+          <div class="tl-company">Tata Consultancy Services</div>
+          <span class="tl-location">Chennai, India · Hybrid</span>
+        </div>
+        <div class="tl-role">Assistant Systems Engineer — Workday Technical Consultant</div>
+        <ul class="tl-bullets">
+          <li>Developed and deployed <strong>custom Workday integrations and REST API pipelines</strong> for enterprise HR and payroll clients, reducing operational errors by 15% through rigorous testing and Agile delivery.</li>
+          <li>Led end-to-end testing, debugging, and deployment of complex system integrations ensuring business requirements were accurately translated into production-grade solutions.</li>
+          <li>Produced technical proposals, solution documentation, and stakeholder-ready artifacts navigating multi-stakeholder environments across IT, legal, and business teams.</li>
+        </ul>
+        <div class="tl-skills">
+          <span class="pill">Workday</span><span class="pill">REST APIs</span><span class="pill">Agile/Jira</span><span class="pill">Systems Integration</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="s-label">04 / Projects</div>
+    <h2 class="s-title">Things I've Built</h2>
+    <div class="proj-grid">
+
+      <div class="proj-card featured reveal">
+        <div class="proj-head">
+          <div class="proj-emoji">🧬</div>
+          <div class="proj-links">
+            <span class="proj-badge">⭐ Featured</span>
+            <a href="https://github.com/kishorenaidu" target="_blank" class="proj-link">GitHub ↗</a>
+          </div>
+        </div>
+        <div class="proj-title">Medical Literature Retrieval System (RAG + LLMs)</div>
+        <p class="proj-desc">End-to-end AI/NLP pipeline for biomedical research — BioBERT embeddings, Chroma (persistent vector DB), FAISS (high-speed similarity search), LangChain orchestration, and GPT models. Processes 50K+ PubMed articles enabling natural language search for medical research insights.</p>
+        <div class="proj-metrics">
+          <span class="metric">78% classification accuracy</span>
+          <span class="metric">40% higher query relevance</span>
+          <span class="metric">30% faster retrieval</span>
+          <span class="metric">50K+ articles</span>
+        </div>
+        <div class="pills">
+          <span class="pill hot">LangChain</span><span class="pill hot">FAISS</span><span class="pill hot">Chroma</span><span class="pill hot">BioBERT</span><span class="pill">HuggingFace</span><span class="pill">GPT API</span><span class="pill">Python</span><span class="pill">RAG</span>
+        </div>
+      </div>
+
+      <div class="proj-card featured reveal">
+        <div class="proj-head">
+          <div class="proj-emoji">🤖</div>
+          <div class="proj-links">
+            <span class="proj-badge">⭐ Featured</span>
+            <a href="https://github.com/kishorenaidu" target="_blank" class="proj-link">GitHub ↗</a>
+          </div>
+        </div>
+        <div class="proj-title">AI Resume Automation Agent (Agentic Workflow)</div>
+        <p class="proj-desc">Autonomous AI agent that runs daily at 8 AM — fetches live LinkedIn job postings via Apify, compares JD vs resume using embeddings + OpenAI API, rewrites resume sections dynamically for ATS alignment, and delivers tailored resumes via Gmail. Fully hands-free.</p>
+        <div class="proj-metrics">
+          <span class="metric">30 min → &lt;1 min</span>
+          <span class="metric">Daily automation</span>
+          <span class="metric">ATS optimized</span>
+        </div>
+        <div class="pills">
+          <span class="pill hot">n8n</span><span class="pill hot">OpenAI API</span><span class="pill">Google Docs API</span><span class="pill">Apify</span><span class="pill">Gmail API</span><span class="pill">Agentic AI</span><span class="pill">Embeddings</span>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-head">
+          <div class="proj-emoji">📉</div>
+          <a href="https://github.com/kishorenaidu" target="_blank" class="proj-link">GitHub ↗</a>
+        </div>
+        <div class="proj-title">Customer Churn Prediction (ML Pipeline)</div>
+        <p class="proj-desc">Built and compared four ML models (Decision Tree, Random Forest, ANN, Logistic Regression) in KNIME. Applied one-hot encoding, normalization, and oversampling for robust data preparation. Delivered actionable churn insights for customer relationship management.</p>
+        <div class="proj-metrics">
+          <span class="metric">85% accuracy</span>
+        </div>
+        <div class="pills">
+          <span class="pill">KNIME</span><span class="pill">Random Forest</span><span class="pill">ANN</span><span class="pill">Decision Tree</span><span class="pill">Predictive Analytics</span>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-head">
+          <div class="proj-emoji">🚗</div>
+          <a href="https://github.com/kishorenaidu" target="_blank" class="proj-link">GitHub ↗</a>
+        </div>
+        <div class="proj-title">Accident Data Analytics (SQL + NoSQL + Python)</div>
+        <p class="proj-desc">Processed and analyzed 1M+ road accident records using SQL (advanced views, multi-dimensional aggregation), MongoDB (demographics, weather queries), and Python. Designed visualizations to identify high-risk zones and drive data-informed safety policy recommendations.</p>
+        <div class="proj-metrics">
+          <span class="metric">1M+ records</span>
+        </div>
+        <div class="pills">
+          <span class="pill">MS SQL Server</span><span class="pill">MongoDB</span><span class="pill">Python</span><span class="pill">Data Visualization</span>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-head">
+          <div class="proj-emoji">🏢</div>
+          <a href="https://github.com/kishorenaidu" target="_blank" class="proj-link">GitHub ↗</a>
+        </div>
+        <div class="proj-title">Enterprise Network Infrastructure Design</div>
+        <p class="proj-desc">Designed and implemented a complete enterprise server infrastructure: Windows Server, Active Directory, DNS, DHCP, IIS, Ubuntu FTP, SSO, firewall configuration, RDP access, email server, and full network diagrams. Documented for client-ready delivery.</p>
+        <div class="pills">
+          <span class="pill">Windows Server</span><span class="pill">Active Directory</span><span class="pill">DNS/DHCP</span><span class="pill">Ubuntu</span><span class="pill">SSO</span><span class="pill">Visio</span>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-head">
+          <div class="proj-emoji">🏠</div>
+          <a href="https://github.com/kishorenaidu" target="_blank" class="proj-link">GitHub ↗</a>
+        </div>
+        <div class="proj-title">Home Lab Server (Raspberry Pi + NAS)</div>
+        <p class="proj-desc">Built and maintained a personal home lab simulating enterprise IT infrastructure. Configured file sharing, user access controls, automated backups, local web server, VPN remote access, and monitoring tools. Documented with architecture diagrams for future scalability.</p>
+        <div class="pills">
+          <span class="pill">Raspberry Pi</span><span class="pill">NAS</span><span class="pill">VPN</span><span class="pill">Linux</span><span class="pill">Server Monitoring</span>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-head">
+          <div class="proj-emoji">📊</div>
+          <a href="https://github.com/kishorenaidu" target="_blank" class="proj-link">GitHub ↗</a>
+        </div>
+        <div class="proj-title">NYC Airbnb Exploratory Data Analysis</div>
+        <p class="proj-desc">Comprehensive EDA on NYC Airbnb Open Data using Python's analytical ecosystem. Uncovered relationships between pricing, minimum nights, availability, and review count — generating revenue optimization and booking strategy insights.</p>
+        <div class="pills">
+          <span class="pill">Python</span><span class="pill">Pandas</span><span class="pill">NumPy</span><span class="pill">Seaborn</span><span class="pill">Matplotlib</span><span class="pill">EDA</span>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-head">
+          <div class="proj-emoji">🛡️</div>
+          <a href="https://github.com/kishorenaidu" target="_blank" class="proj-link">GitHub ↗</a>
+        </div>
+        <div class="proj-title">Phishing Website Detection (ML)</div>
+        <p class="proj-desc">Intelligent system for detecting phishing websites by checking URL features, blacklist databases, and WHOIS records. Built during undergrad to target human-layer internet security vulnerabilities — an early application of ML to cybersecurity.</p>
+        <div class="pills">
+          <span class="pill">Python</span><span class="pill">Machine Learning</span><span class="pill">Cybersecurity</span><span class="pill">WHOIS</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="container">
+    <div class="s-label">05 / Certifications</div>
+    <h2 class="s-title">Licenses &amp; Credentials</h2>
+    <div class="certs-grid">
+
+      <div class="cert-card reveal">
+        <div class="cert-issuer">Microsoft</div>
+        <div class="cert-name">Azure Administrator Associate</div>
+        <div class="cert-date">Issued Jun 2025 · Expires Jun 2027</div>
+        <a href="https://learn.microsoft.com/api/credentials/share/en-us/KishoreMadanagopal-8153/753ED2C1FA4E80CF" target="_blank" class="cert-link">View Credential ↗</a>
+      </div>
+
+      <div class="cert-card reveal">
+        <div class="cert-issuer">Databricks</div>
+        <div class="cert-name">Academy Accreditation — Generative AI Fundamentals</div>
+        <div class="cert-date">Issued Mar 2025 · Expires Mar 2027</div>
+        <a href="https://credentials.databricks.com/f8081995-ba24-48c0-bb90-0f617e5bf898" target="_blank" class="cert-link">View Credential ↗</a>
+      </div>
+
+      <div class="cert-card reveal">
+        <div class="cert-issuer">Microsoft</div>
+        <div class="cert-name">Azure AI Fundamentals</div>
+        <div class="cert-date">Issued Oct 2024</div>
+        <a href="https://www.credly.com/badges/92b64074-2e2e-4573-b9e7-a16fe51a75aa/linked_in_profile" target="_blank" class="cert-link">View Credential ↗</a>
+      </div>
+
+      <div class="cert-card reveal">
+        <div class="cert-issuer">KNIME</div>
+        <div class="cert-name">Basic Proficiency in KNIME Analytics Platform</div>
+        <div class="cert-date">Issued Nov 2024</div>
+        <a href="https://www.credly.com/badges/f32f715f-72f3-420c-8551-4933fcdb2cd1/linked_in_profile" target="_blank" class="cert-link">View Credential ↗</a>
+      </div>
+
+      <div class="cert-card reveal">
+        <div class="cert-issuer">Kaseya</div>
+        <div class="cert-name">Datto Certified Practitioner in RMM</div>
+        <div class="cert-date">Issued May 2024 · Expires May 2026</div>
+        <div class="cert-link" style="color:var(--dim);cursor:default">Verified</div>
+      </div>
+
+      <div class="cert-card reveal">
+        <div class="cert-issuer">Atlassian</div>
+        <div class="cert-name">Agile with Atlassian Jira</div>
+        <div class="cert-date">Issued Mar 2024 · ID: QXBFS64LHW56</div>
+        <a href="https://www.coursera.org/account/accomplishments/records/QXBFS64LHW56" target="_blank" class="cert-link">View Credential ↗</a>
+      </div>
+
+      <div class="cert-card reveal">
+        <div class="cert-issuer">Tableau</div>
+        <div class="cert-name">Tableau Desktop Specialist</div>
+        <div class="cert-date">Issued Nov 2023</div>
+        <a href="https://www.credly.com/badges/f2bd282c-b56c-4487-9e98-c81dde293905/linked_in_profile" target="_blank" class="cert-link">View Credential ↗</a>
+      </div>
+
+      <div class="cert-card reveal">
+        <div class="cert-issuer">Coursera / AWS</div>
+        <div class="cert-name">Getting Started with Data Analytics on AWS</div>
+        <div class="cert-date">Issued Nov 2021 · ID: XHM44TNZD89W</div>
+        <a href="https://www.coursera.org/account/accomplishments/certificate/XHM44TNZD89W" target="_blank" class="cert-link">View Credential ↗</a>
+      </div>
+
+      <div class="cert-card reveal">
+        <div class="cert-issuer">Cisco Networking Academy</div>
+        <div class="cert-name">Introduction to IoT</div>
+        <div class="cert-date">Issued Nov 2020</div>
+        <div class="cert-link" style="color:var(--dim);cursor:default">Verified</div>
+      </div>
+
+      <div class="cert-card reveal">
+        <div class="cert-issuer">NIIT Limited</div>
+        <div class="cert-name">Programming with Python for Data Science</div>
+        <div class="cert-date">Issued Apr 2019 · ID: 20AAZZZZZ0901</div>
+        <div class="cert-link" style="color:var(--dim);cursor:default">Verified</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section id="publications">
+  <div class="container">
+    <div class="s-label">06 / Research</div>
+    <h2 class="s-title">Publications</h2>
+
+    <div class="pub-card reveal">
+      <div class="pub-year">2022</div>
+      <div style="flex:1">
+        <div class="pub-venue">IEEE · International Interdisciplinary Humanitarian Conference</div>
+        <div class="pub-title">IoT Based Smart Industry Monitoring and Alerting System</div>
+        <div class="pub-authors"><strong>K. Madanagopal</strong>, K. Saivarun, R. Ramakrishnan</div>
+        <div class="pub-abstract">Leverages IoT technology integrated with cloud-based data analytics and sensor networks to create a Smart Industry Monitoring and Alerting System. The system detects hazardous gas leaks in real-time and triggers automatic alerts to appropriate personnel — demonstrating the transformative potential of IoT in enhancing industrial safety and operational efficiency.</div>
+        <div class="pub-meta">
+          <span class="pub-stat">9 Citations</span>
+          <span class="pub-stat">h-index: 1</span>
+          <span class="pub-stat">IEEE Xplore: 10059702</span>
+          <a href="https://ieeexplore.ieee.org/document/10059702" target="_blank" style="font-family:'JetBrains Mono',monospace;font-size:.6rem;padding:.18rem .55rem;border-radius:2px;background:rgba(232,121,249,.08);border:1px solid rgba(232,121,249,.22);color:var(--fuchsia);text-decoration:none">Read on IEEE ↗</a>
+          <a href="https://scholar.google.com/citations?user=w5tvejIAAAAJ&hl=en" target="_blank" style="font-family:'JetBrains Mono',monospace;font-size:.6rem;padding:.18rem .55rem;border-radius:2px;background:rgba(96,165,250,.07);border:1px solid rgba(96,165,250,.2);color:var(--blue);text-decoration:none">Google Scholar ↗</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="container">
+    <div class="s-label">07 / Education</div>
+    <h2 class="s-title">Academic Background</h2>
+    <div class="edu-grid">
+      <div class="edu-card reveal">
+        <div class="edu-deg">Master of Science — Management Information Systems</div>
+        <div class="edu-school">Oklahoma State University · Stillwater, OK</div>
+        <div class="edu-period">Aug 2023 – May 2025</div>
+        <div class="edu-body">Coursework: Digital Forensics &amp; Incident Response, Programming for Data Science &amp; Analytics, Advanced Infrastructure Development, Machine Learning, Network Infrastructure. Graduate Research &amp; Teaching Assistant across three departments. MIS Representative in Graduate Leadership Association of Spears (GLAS). Webmaster for Indian Students Association.</div>
+        <div class="edu-badges">
+          <span class="edu-b gpa">4.0 GPA</span>
+          <span class="edu-b yr">Class of 2025</span>
+          <span class="edu-b award">Outstanding Graduate Student</span>
+          <span class="edu-b award">Ideal Graduate Award</span>
+        </div>
+      </div>
+      <div class="edu-card reveal">
+        <div class="edu-deg">Bachelor of Technology — Computer Science &amp; Engineering</div>
+        <div class="edu-school">SRM Institute of Science and Technology · Chennai, India</div>
+        <div class="edu-period">Aug 2017 – May 2021</div>
+        <div class="edu-body">Core CS fundamentals: algorithms, data structures, operating systems, networking, and software engineering. Published IEEE research during undergraduate studies. Active member of White Hat Hackers Club (cybersecurity awareness). Event Coordinator for IET Conclave 2020 on Cloud Computing &amp; E-mobility. Editorial team member for campus magazine ESPIRITO.</div>
+        <div class="edu-badges">
+          <span class="edu-b gpa">3.0 GPA</span>
+          <span class="edu-b yr">Class of 2021</span>
+          <span class="edu-b award">IEEE Published</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEADERSHIP -->
+<section id="leadership">
+  <div class="container">
+    <div class="s-label">08 / Leadership</div>
+    <h2 class="s-title">Beyond the Code</h2>
+    <div class="lead-grid">
+      <div class="lead-card reveal">
+        <div class="lead-icon">🎓</div>
+        <div class="lead-title">MIS Representative</div>
+        <div class="lead-org">Graduate Leadership Association of Spears (GLAS)</div>
+        <div class="lead-period">Jul 2024 – May 2025 · 11 months</div>
+        <div class="lead-desc">Represented MIS graduate students at OSU Spears School of Business. Fostered networking, leadership development, and career growth for graduate students across all programs.</div>
+      </div>
+      <div class="lead-card reveal">
+        <div class="lead-icon">🌐</div>
+        <div class="lead-title">Webmaster</div>
+        <div class="lead-org">Indian Students Association · OSU</div>
+        <div class="lead-period">May 2024 – May 2025 · 1 year</div>
+        <div class="lead-desc">Managed ISA's digital presence and online platforms, ensuring smooth operation for a vibrant community that celebrates culture, unity, and student support. Received Certificate of Appreciation.</div>
+      </div>
+      <div class="lead-card reveal">
+        <div class="lead-icon">🏆</div>
+        <div class="lead-title">Outstanding Graduate Student</div>
+        <div class="lead-org">OSU Spears School of Business</div>
+        <div class="lead-period">2025</div>
+        <div class="lead-desc">Recognized at the OSU Spears School of Business Graduate Program Awards &amp; Scholarship Luncheon for academic excellence and contributions to the graduate community.</div>
+      </div>
+      <div class="lead-card reveal">
+        <div class="lead-icon">✦</div>
+        <div class="lead-title">OSU Ideal Graduate</div>
+        <div class="lead-org">Oklahoma State University</div>
+        <div class="lead-period">2025</div>
+        <div class="lead-desc">Recognized at OSU's Ideal Graduate Celebration for embodying OSU's core values: professional preparedness, engaged citizenship, ethical leadership, and personal responsibility.</div>
+      </div>
+      <div class="lead-card reveal">
+        <div class="lead-icon">⚡</div>
+        <div class="lead-title">Event Coordinator</div>
+        <div class="lead-org">Institution of Engineering and Technology (IET)</div>
+        <div class="lead-period">Feb 2020 · SRM University</div>
+        <div class="lead-desc">Spearheaded IET Conclave 2020 on "Cloud Computing and E-mobility" — managing logistics, guest speakers, marketing, and multi-stakeholder coordination for a major engineering conference.</div>
+      </div>
+      <div class="lead-card reveal">
+        <div class="lead-icon">🛡️</div>
+        <div class="lead-title">Cybersecurity Advocate</div>
+        <div class="lead-org">White Hat Hackers Club · SRM</div>
+        <div class="lead-period">Nov 2017 – May 2019 · 1 yr 7 mos</div>
+        <div class="lead-desc">Produced promotional content and materials for cybersecurity awareness initiatives — posters, videos, and campaigns fostering a culture of security consciousness within the university community.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="s-label">09 / Contact</div>
+    <h2 class="s-title">Let's Connect</h2>
+    <div class="contact-wrap">
+      <p class="contact-sub">Open to full-time roles in <strong style="color:var(--soft)">AI Engineering, ML Engineering, RL Engineering, Applied Science, and LLM Engineering</strong>. Remote, hybrid, or onsite. Authorized to work in the United States.</p>
+      <a href="mailto:kishoremadanagopal@gmail.com" class="email-link">kishoremadanagopal@gmail.com</a>
+      <div class="socials">
+        <a href="https://linkedin.com/in/kishoremadanagopal" target="_blank" class="soc-link">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+          LinkedIn
+        </a>
+        <a href="https://github.com/kishorenaidu" target="_blank" class="soc-link">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          GitHub
+        </a>
+        <a href="https://scholar.google.com/citations?user=w5tvejIAAAAJ&hl=en" target="_blank" class="soc-link">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg>
+          Google Scholar
+        </a>
+        <a href="https://ieeexplore.ieee.org/document/10059702" target="_blank" class="soc-link">
+          IEEE Publication ↗
+        </a>
+        <a href="mailto:kishoremadanagopal@gmail.com" class="soc-link">
+          ✉ Email Me
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Kishore Madanagopal · San Jose, CA</p>
+  <p>Built with HTML · Deployed on GitHub Pages</p>
+</footer>
+
+<script>
+  /* STARS */
+  const sc = document.getElementById('stars');
+  for(let i=0;i<150;i++){
+    const s=document.createElement('div');
+    s.className='star';
+    const sz=Math.random()*1.8+.3;
+    s.style.cssText=`width:${sz}px;height:${sz}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--d:${(Math.random()*5+2).toFixed(1)}s;--o:${(Math.random()*.5+.08).toFixed(2)};animation-delay:${(Math.random()*6).toFixed(1)}s`;
+    sc.appendChild(s);
+  }
+
+  /* SCROLL REVEAL */
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach((e,i)=>{
+      if(e.isIntersecting) setTimeout(()=>e.target.classList.add('in'),i*80);
+    });
+  },{threshold:.08});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
